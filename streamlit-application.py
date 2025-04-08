@@ -1,5 +1,6 @@
 import streamlit as st
 import torch
+import os
 import torchvision.transforms as transforms
 from PIL import Image
 import numpy as np
@@ -9,13 +10,13 @@ led_types = ['cree', 'dominant', 'lumileds', 'nichia131', 'nichia170', 'osrambf'
 # Load PyTorch models (Replace with your own models)
 # TODO: Use correct paths to the specified .pth files 
 def load_models():
-    model1 = torch.load(f"models\\mae_classification.pth", map_location='cpu', weights_only=False)['model']
+    model1 = torch.load(os.path.join('models', 'mae_classification.pth'), map_location='cpu', weights_only=False)['model']
     model1.eval()
 
-    model2 = torch.load(f"models\\mae_regression.pth", map_location='cpu', weights_only=False)['model']
+    model2 = torch.load(os.path.join('models', 'mae_regression.pth'), map_location='cpu', weights_only=False)['model']
     model2.eval()
 
-    model3 = torch.load(f"models\\mae_quality_classification.pth", map_location='cpu', weights_only=False)['model']
+    model3 = torch.load(os.path.join('models', 'mae_quality_classification.pth'), map_location='cpu', weights_only=False)['model']
     model3.eval()
 
     return model1, model2, model3
