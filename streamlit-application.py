@@ -3,7 +3,6 @@ import torch
 import torchvision.transforms as transforms
 from PIL import Image
 import numpy as np
-from Configs import config
 
 # Load PyTorch models (Replace with your own models)
 # TODO: Use correct paths to the specified .pth files 

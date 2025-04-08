@@ -2,3 +2,4 @@ torch
 streamlit
 Pillow
 numpy
+torchvision
