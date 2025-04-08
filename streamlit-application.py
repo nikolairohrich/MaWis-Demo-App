@@ -4,6 +4,8 @@ import torchvision.transforms as transforms
 from PIL import Image
 import numpy as np
 
+led_types = ['cree', 'dominant', 'lumileds', 'nichia131', 'nichia170', 'osrambf', 'osramcomp', 'samsung', 'seoul']
+
 # Load PyTorch models (Replace with your own models)
 # TODO: Use correct paths to the specified .pth files 
 def load_models():
@@ -90,7 +92,7 @@ elif page == "Image-Based Deep Learning":
 
         # Get outputs from models
         classification_output = get_model_outputs(processed_image, model1)
-        led_type = config.led_types[np.argmax(classification_output)]
+        led_type = led_types[np.argmax(classification_output)]
         led_type = led_type[0].upper() + led_type[1:]
 
         regression_output = get_model_outputs(processed_image, model2)
@@ -112,7 +114,7 @@ elif page == "LED Type & Solder Paste Prediction":
     st.write("""Here, we showcase a statistical model.""")
     
     # Select LED types
-    led_type = st.selectbox("Choose LED Type:", [led_type[0].upper() + led_type[1:] for led_type in config.led_types])
+    led_type = st.selectbox("Choose LED Type:", [led_type[0].upper() + led_type[1:] for led_type in led_types])
     
     # Select Solder Pastes
     solder_paste = st.selectbox("Choose Solder Paste:", ["SAC105", 
