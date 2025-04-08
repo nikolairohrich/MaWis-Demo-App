@@ -3,3 +3,5 @@ streamlit
 Pillow
 numpy
 torchvision
+einops 
+timm
