@@ -5,3 +5,7 @@ numpy
 torchvision
 einops 
 timm
+matplotlib
+pandas
+plotly
+scikit-learn
