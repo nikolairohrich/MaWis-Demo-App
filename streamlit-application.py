@@ -383,7 +383,7 @@ with tab2:
 # === TAB 2: XITASO MODEL ===
 
 with tab3:
-    st.markdown('<h1 class="main-title">Xitaso Model</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-title">XITASO Model</h1>', unsafe_allow_html=True)
     st.write("""Here, we showcase Vision Transformer (ViT) models that were self-pretrained 
              using the Masked Autoencoder (MAE) framework (see https://arxiv.org/abs/2504.10021).
              Upload an SAM image to get a prediction of whether the shown LED is still functional and 
