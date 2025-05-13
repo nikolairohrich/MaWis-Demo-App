@@ -114,6 +114,8 @@ with tab1:
     subtab1, subtab2 = st.tabs(["LED Lifetime Prediction", "AI Based Solder reliability Prediction using 3D FEA data"])
 
     with subtab1:
+        st.write('This model predicts the lifetime of LEDs under thermal cycling using a deep learning-based regression model. ' \
+        'Simply adjust input paramters like solder type or LED type to generate predictions.')
         model = LifetimePredictionModel(4, 7, 2, 2, 7, 8)
         model.load_state_dict(torch.load("saved_models/final_model.pth", map_location=torch.device("cpu")))
         model.eval()
@@ -194,6 +196,8 @@ with tab1:
             st.plotly_chart(fig, use_container_width=True)
 
     with subtab2:
+        st.write('This model predicts the lifetime of LEDs based on 3D point cloud data using a simplified PointNet-inspired neural network. ' \
+        'Simply upload a .npy point cloud file to get a reliability prediction.')
         class SimplePointNet(nn.Module):
             def __init__(self):
                 super(SimplePointNet, self).__init__()
@@ -293,6 +297,8 @@ with tab1:
 # === TAB 2: MTS MODEL ===
 with tab2:
     st.markdown('<h1 class="main-title">MTS Model Prediction</h1>', unsafe_allow_html=True)
+    st.write("""Here, we showcase our lifetime prediction model, which estimates the expected cycle number for electronic components based on selected component type and solder type.
+        The model uses empirically derived coefficients to calculate the predicted lifetime under thermal cycling conditions.""")
     mts_base_cycle = 531.9855
     component_coefficients = {
         "BGA": 140.3583,
@@ -396,7 +402,7 @@ with tab3:
     st.markdown("""
     <style>
         .highlight {
-            background-color: #0c3b39;
+            background-color: #5F9EA0;
             padding: 5px 10px;
             border-radius: 5px;
             font-weight: bold;
