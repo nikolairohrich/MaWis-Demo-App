@@ -95,7 +95,7 @@ st.markdown("""
 st.markdown('<div class="title-center">MAWIS-KI</div>', unsafe_allow_html=True)
 
 # === APP LAYOUT ===
-tab1, tab2, tab3 = st.tabs(["THI Prediction Model", "MTS Prediction Model", "XITASO Prediction Model"])
+tab1, tab2, tab3 = st.tabs(["THI Prediction Model", "mts Prediction Model", "XITASO Prediction Model"])
 
 # === Constants ===
 min_max_values = {
@@ -294,97 +294,36 @@ with tab1:
                     except Exception as e:
                         st.error(f"Error with {file.name}: {e}")
 
-# === TAB 2: MTS MODEL ===
+# === TAB 2: mts MODEL ===
 with tab2:
-    st.markdown('<h1 class="main-title">MTS Model Prediction</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-title">mts Model Prediction</h1>', unsafe_allow_html=True)
     st.write("""Here, we showcase our lifetime prediction model, which estimates the expected cycle number for electronic components based on selected component type and solder type.
         The model uses empirically derived coefficients to calculate the predicted lifetime under thermal cycling conditions.""")
-    mts_base_cycle = 531.9855
+    mts_base_cycle = 510.013
+    resistance_weight = 49.16141
     component_coefficients = {
-        "BGA": 140.3583,
-        "R0402": 144.0145,
-        "R0805": 144.0145,
-        "WLP": -428.3873
+        "BGA": 113.2908,
+        "R0402": 162.3644,
+        "R0805": 149.0211,
+        "WLP": -424.6763
     }
     solder_coefficients = {
-        "SAC105": 8.74496,
-        "SAC387": 12.45773,
-        "SAC396+Sb": 22.31338,
-        "SAC107+BiIn": -23.20746,
-        "SAC387+SbBiNi": -20.30861
+        "SAC105": 7.746661,
+        "SAC387": 11.59086,
+        "SAC396+Sb": 22.09496,
+        "SAC107+BiIn": -21.15426,
+        "SAC387+SbBiNi": -20.27822
     }
 
     selected_component = st.selectbox("Select Component Type", list(component_coefficients.keys()))
     selected_solder = st.selectbox("Select Solder Type", list(solder_coefficients.keys()))
+    selected_resistance = st.slider(label = "Select Initial Resistance", min_value=0, max_value=11, step=1)
 
-    # Calculate cycle numbers for all components and solder types
-    all_cycle_numbers = {}
-    for component in component_coefficients:
-        all_cycle_numbers[component] = {}
-        for solder in solder_coefficients:
-            component_factor = component_coefficients[component]
-            solder_factor = solder_coefficients[solder]
-            cycle_number = mts_base_cycle + component_factor + solder_factor
-            all_cycle_numbers[component][solder] = cycle_number
-
-    # Generate the graph
-    fig = go.Figure()
-
-    # Add all components and solder types to the graph
-    for component in all_cycle_numbers:
-        for solder in all_cycle_numbers[component]:
-            cycle_number = all_cycle_numbers[component][solder]
-            fig.add_trace(go.Bar(
-                x=[f"{component} - {solder}"],
-                y=[cycle_number],
-                name=f"{component} - {solder}",
-                hoverinfo='x+y',
-                marker=dict(color='lightblue')  # Default color
-            ))
-
-    # Highlight the selected component and solder type
-    highlighted_cycle_number = all_cycle_numbers[selected_component][selected_solder]
-    fig.add_trace(go.Bar(
-        x=[f"{selected_component} - {selected_solder}"],
-        y=[highlighted_cycle_number],
-        name=f"Selected: {selected_component} - {selected_solder}",
-        marker=dict(color='red'),  # Highlight color
-        hoverinfo='x+y'
-    ))
-
-    # Update graph layout for better display
-    fig.update_layout(
-        title={
-            'text': "Cycle Numbers by Component and Solder Type",
-            'x': 0.5,
-            'xanchor': 'center',
-            'font': {'size': 24}
-        },
-        xaxis_title="Component - Solder Type",
-        yaxis_title="Cycle Number",
-        xaxis=dict(
-            tickangle=-45,
-            title_font=dict(size=18),
-            tickfont=dict(size=12),
-            automargin=True
-        ),
-        yaxis=dict(
-            title_font=dict(size=18),
-            tickfont=dict(size=12)
-        ),
-        height=800,  # Larger height for better visibility
-        margin=dict(l=50, r=50, t=100, b=200),  # Improved spacing
-        showlegend=False,  # Hides legend for cleaner display
-        plot_bgcolor='rgba(240,240,240,1)',  # Light gray background for better contrast
-        hoverlabel=dict(font_size=14)  # Better hover label visibility
-    )
-
-    # Display the graph
-    st.plotly_chart(fig, use_container_width=True)
-
+    predicted_cycles = mts_base_cycle + component_coefficients[selected_component] + solder_coefficients[selected_solder] - selected_resistance * resistance_weight
+    
     # Display highlighted prediction
-    if st.button("Predict Lifetime (MTS)"):
-        st.markdown(f"### **Predicted Cycle Number: {highlighted_cycle_number:.2f} cycles**")
+    # if st.button("Predict Lifetime (mts)"):
+    st.markdown(f"### **Predicted Cycle Number: {predicted_cycles:.2f} cycles**")
 
 # === TAB 2: XITASO MODEL ===
 
