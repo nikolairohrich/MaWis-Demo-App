@@ -1,0 +1,27 @@
+*/.ipynb_checkpoints/*
+*.egg-info/*
+*spyproject/*
+*.pylint.d/
+dist/*
+build/TTA_GUI/*
+
+*.pyc
+*.log
+
+*.pdf
+*.xlsx
+*.sla
+*.png
+*.jpg
+*.dat
+*.svg
+*.orig
+*.csv
+*.pickle
+
+*.lnk
+
+!.pylintrc
+
+
+Conti Feedback zu MaWis-KI  Streamlit App_05_05_2025.docx
