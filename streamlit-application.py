@@ -323,7 +323,7 @@ with tab2:
     
     # Display highlighted prediction
     # if st.button("Predict Lifetime (mts)"):
-    st.markdown(f"### **Predicted Cycle Number: {predicted_cycles:.2f} cycles**")
+    st.markdown(f"### **Predicted Cycle Number: {predicted_cycles:.2f} Cycles**")
 
 # === TAB 2: XITASO MODEL ===
 
