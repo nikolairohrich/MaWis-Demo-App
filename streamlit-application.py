@@ -319,7 +319,7 @@ with tab2:
     selected_solder = st.selectbox("Select Solder Type", list(solder_coefficients.keys()))
     selected_resistance = st.slider(label = "Select Initial Resistance", min_value=0, max_value=11, step=1)
 
-    predicted_cycles = mts_base_cycle + component_coefficients[selected_component] + solder_coefficients[selected_solder] - selected_resistance * resistance_weight
+    predicted_cycles = mts_base_cycle + component_coefficients[selected_component] + solder_coefficients[selected_solder] - ((selected_resistance-5.627144)/5.504751) * resistance_weight
     
     # Display highlighted prediction
     # if st.button("Predict Lifetime (mts)"):
